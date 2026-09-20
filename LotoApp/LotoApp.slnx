@@ -1,6 +1,8 @@
 <Solution>
   <Project Path="LotoApp.DataAccess/LotoApp.DataAccess.csproj" />
   <Project Path="LotoApp.Domain/LotoApp.Domain.csproj" />
+  <Project Path="LotoApp.DTOs/LotoApp.DTOs.csproj" />
   <Project Path="LotoApp.Helpers/LotoApp.Helpers.csproj" />
+  <Project Path="LotoApp.Services/LotoApp.Services.csproj" />
   <Project Path="LotoApp/LotoApp.csproj" />
 </Solution>
