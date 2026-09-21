@@ -27,6 +27,9 @@ namespace LotoApp.Helpers
         public static void InjectServices(IServiceCollection services)
         {
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITicketService, TicketService>();
+            services.AddScoped<IDrawService, DrawService>();
+            services.AddScoped<ISessionService, SessionService>();
         }
     }
 }
