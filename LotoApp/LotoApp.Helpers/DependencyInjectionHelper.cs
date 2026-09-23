@@ -30,6 +30,7 @@ namespace LotoApp.Helpers
             services.AddScoped<ITicketService, TicketService>();
             services.AddScoped<IDrawService, DrawService>();
             services.AddScoped<ISessionService, SessionService>();
+            services.AddScoped<IWinnerService, WinnerService>();
         }
     }
 }

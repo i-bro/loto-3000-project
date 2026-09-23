@@ -39,6 +39,8 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+builder.Services.AddHttpContextAccessor();
+
 DependencyInjectionHelper.InjectDbContext(builder.Services);
 DependencyInjectionHelper.InjectRepositories(builder.Services);
 DependencyInjectionHelper.InjectServices(builder.Services);
@@ -63,6 +65,7 @@ builder.Services.AddAuthentication(x =>
         ClockSkew = TimeSpan.Zero
     };
 });
+
 
 
 var app = builder.Build();

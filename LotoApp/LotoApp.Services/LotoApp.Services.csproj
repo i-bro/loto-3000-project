@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.13" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\LotoApp.DataAccess\LotoApp.DataAccess.csproj" />
     <ProjectReference Include="..\LotoApp.DTOs\LotoApp.DTOs.csproj" />
   </ItemGroup>

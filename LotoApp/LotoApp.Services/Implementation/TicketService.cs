@@ -1,7 +1,9 @@
-﻿using LotoApp.DataAccess.Interfaces;
+﻿using Azure.Core;
+using LotoApp.DataAccess.Interfaces;
 using LotoApp.Domain.Models;
 using LotoApp.DTOs;
 using LotoApp.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
 
 namespace LotoApp.Services.Implementation
 {
@@ -9,23 +11,29 @@ namespace LotoApp.Services.Implementation
     {
         private readonly ITicketRepository _ticketRepository;
         private readonly ISessionRepository _sessionRepository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public TicketService(ITicketRepository ticketRepository, ISessionRepository sessionRepository)
+        public TicketService(ITicketRepository ticketRepository, ISessionRepository sessionRepository, IHttpContextAccessor httpContextAccessor)
         {
             _ticketRepository = ticketRepository;
             _sessionRepository = sessionRepository;
+            _httpContextAccessor = httpContextAccessor;
         }
         public async Task<IEnumerable<TicketResponseDto>> GetUserTicketAsync(int userId)
         {
             var allTickets = await _ticketRepository.GetAllAsync();
 
+            var request = _httpContextAccessor.HttpContext?.Request;
+            
             return allTickets.Where(t => t.UserId == userId)
                 .Select(t => new TicketResponseDto
                 {
                     Id = t.Id,
                     SessionId = t.SessionId,
                     Numbers = t.Numbers,
-                    CreatedAt = t.SubmittedAt
+                    CreatedAt = t.SubmittedAt,
+                    Message = "Please wait for the draw. If you win a prize, your name will appear on the winners board!",
+                    WinnersBoardUrl = request != null ? $"{request.Scheme}://{request.Host}/api/winners" : "/api/winners"
                 });
         }
 
@@ -69,12 +77,16 @@ namespace LotoApp.Services.Implementation
             await _ticketRepository.AddAsync(ticket);
             await _ticketRepository.SaveChangesAsync();
 
+            var request = _httpContextAccessor.HttpContext?.Request;
+
             return new TicketResponseDto
             {
                 Id = ticket.Id,
                 SessionId = ticket.SessionId,
                 Numbers = sortedNumbers,
-                CreatedAt = ticket.SubmittedAt
+                CreatedAt = ticket.SubmittedAt,
+                Message = "Please wait for the draw. If you win a prize, your name will appear on the winners board!",
+                WinnersBoardUrl = request != null ? $"{request.Scheme}://{request.Host}/api/winners" : "/api/winners"
             };
         }
     }

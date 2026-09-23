@@ -21,7 +21,8 @@ namespace LotoApp.Services.Implementation
                 activeSession = new Session
                 {
                     StartedAt = DateTime.UtcNow,
-                    IsActive = true
+                    IsActive = true,
+                    EndedAt = DateTime.Now
                 };
 
                 await _sessionRepository.AddAsync(activeSession);
